@@ -37,22 +37,46 @@ def add_client(name, formula):
         conn.close()
 
 # Удаление клиента
-def delete_client(name):
+def delete_client(name: str) -> bool:
     conn = connect_db()
     cur = conn.cursor()
-    cur.execute('DELETE FROM clients WHERE name = ?', (name,))
-    conn.commit()
-    cur.close()
-    conn.close()
+
+    # Проверка наличия клиента
+    cur.execute('SELECT 1 FROM clients WHERE name = ?', (name,))
+    client_exists = cur.fetchone()
+
+    if client_exists:
+        # Удаление клиента
+        cur.execute('DELETE FROM clients WHERE name = ?', (name,))
+        conn.commit()
+        cur.close()
+        conn.close()
+        return True
+    else:
+        cur.close()
+        conn.close()
+        return False
 
 # Изменение формулы клиента
-def update_client_formula(name, new_formula):
+def update_client_formula(name: str, new_formula: str) -> bool:
     conn = connect_db()
     cur = conn.cursor()
-    cur.execute('UPDATE clients SET formula = ? WHERE name = ?', (new_formula, name))
-    conn.commit()
-    cur.close()
-    conn.close()
+
+    # Проверка наличия клиента
+    cur.execute('SELECT 1 FROM clients WHERE name = ?', (name,))
+    client_exists = cur.fetchone()
+
+    if client_exists:
+        # Обновление формулы клиента
+        cur.execute('UPDATE clients SET formula = ? WHERE name = ?', (new_formula, name))
+        conn.commit()
+        cur.close()
+        conn.close()
+        return True
+    else:
+        cur.close()
+        conn.close()
+        return False
 
 # Расчет выплаты
 def calculate_payment(client_name, amount):
