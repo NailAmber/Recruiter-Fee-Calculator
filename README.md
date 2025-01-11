@@ -1,4 +1,4 @@
-# Recruiter-Fee-Calculator
+# Recruiter-Fee-Calculator for WORK WAVE
 
 ! Create `.env` in root with !  
 ```TELEGRAM_BOT_TOKEN=123:xxx```
