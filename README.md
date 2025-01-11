@@ -9,3 +9,5 @@ TRUSTED_USERS=123456789,987654321
 install `requirements.txt` via `pip install -r requirements.txt`
 
 launch `recruiter_bot.py`
+
+tested on Python 3.11.0
