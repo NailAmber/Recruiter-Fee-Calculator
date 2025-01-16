@@ -81,14 +81,14 @@ def api_update_client_formula():
 def api_calculate_payment():
     data = request.json
     client_name = data.get('client_name')
-    amount = data.get('amount')
+    payment = data.get('payment')
 
     # Проверка на отсутствие обязательных параметров
-    if not client_name or amount is None:
+    if not client_name or payment is None:
         return make_response(jsonify({"status": "error", "message": "Client name and amount are required."}), 400)
 
     try:
-        payment, formula = calculate_payment(client_name, amount)
+        payment, formula = calculate_payment(client_name, payment)
         if payment is None:
             return make_response(jsonify({"status": "error", "message": f"Client '{client_name}' not found."}), 404)
         return make_response(jsonify({"status": "success", "payment": payment, "formula": formula}), 200)

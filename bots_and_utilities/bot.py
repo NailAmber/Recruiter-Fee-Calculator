@@ -26,8 +26,8 @@ def update_client_formula():
 
 def calculate_payment():
     client_name = input("Enter client name: ")
-    amount = input("Enter amount: ")
-    data = {"client_name": client_name, "amount": amount}
+    payment = input("Enter payment: ")
+    data = {"client_name": client_name, "payment": payment}
     response = requests.post(f"{BASE_URL}/calculate_payment", json=data)
     print(f"Status Code: {response.status_code}")
     print(response.json())
