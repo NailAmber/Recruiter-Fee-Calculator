@@ -1,13 +1,181 @@
-# Recruiter-Fee-Calculator for WORK WAVE
+# REST API Documentation for Client Management System
 
-Create `.env` in root with bot token and telegram id for use admin commands !  
+## Overview
+This API allows for managing clients, including adding, deleting, updating client formulas, calculating payments based on client-specific formulas, and retrieving a list of all clients. The API is built using Flask and uses SQLite for data storage.
+
+## Base URL
 ```
-TELEGRAM_BOT_TOKEN=123:xxx
-TRUSTED_USERS=123456789,987654321
+http://<your-server-ip>:5000/
 ```
 
-install `requirements.txt` via `pip install -r requirements.txt`
+## Endpoints
 
-launch `recruiter_bot.py`
+### 1. Add Client
+**POST** `/add_client`
 
-tested on Python 3.11.0
+Adds a new client with a specified formula for payment calculation.
+
+#### Request Body
+- `name` (string, required): The name of the client.
+- `formula` (string, required): The formula used to calculate payments for the client.
+
+#### Example
+```json
+{
+    "name": "client1",
+    "formula": "amount * 0.1"
+}
+```
+
+#### Responses
+- `201 Created`: Client added successfully.
+  ```json
+  {
+      "status": "success",
+      "message": "Client 'client1' added."
+  }
+  ```
+- `400 Bad Request`: Missing required parameters.
+  ```json
+  {
+      "status": "error",
+      "message": "Name and formula are required."
+  }
+  ```
+- `409 Conflict`: Client already exists.
+  ```json
+  {
+      "status": "error",
+      "message": "Client 'client1' already exists."
+  }
+  ```
+- `500 Internal Server Error`: Server error.
+
+### 2. Delete Client
+**DELETE** `/delete_client/<name>`
+
+Deletes an existing client by name.
+
+#### URL Parameter
+- `name` (string, required): The name of the client to be deleted.
+
+#### Responses
+- `200 OK`: Client deleted successfully.
+  ```json
+  {
+      "status": "success",
+      "message": "Client 'client1' deleted."
+  }
+  ```
+- `404 Not Found`: Client not found.
+  ```json
+  {
+      "status": "error",
+      "message": "Client 'client1' not found."
+  }
+  ```
+- `500 Internal Server Error`: Server error.
+
+### 3. Update Client Formula
+**PUT** `/update_client_formula`
+
+Updates the formula for an existing client.
+
+#### Request Body
+- `name` (string, required): The name of the client.
+- `new_formula` (string, required): The new formula for the client.
+
+#### Example
+```json
+{
+    "name": "client1",
+    "new_formula": "amount * 0.2"
+}
+```
+
+#### Responses
+- `200 OK`: Formula updated successfully.
+  ```json
+  {
+      "status": "success",
+      "message": "Client 'client1' formula updated."
+  }
+  ```
+- `400 Bad Request`: Missing parameters or incorrect formula.
+  ```json
+  {
+      "status": "error",
+      "message": "Name and new formula are required."
+  }
+  ```
+  ```json
+  {
+      "status": "error",
+      "message": "Formula is not correct."
+  }
+  ```
+- `404 Not Found`: Client not found.
+- `500 Internal Server Error`: Server error.
+
+### 4. Calculate Payment
+**POST** `/calculate_payment`
+
+Calculates the payment for a specified client based on their formula.
+
+#### Request Body
+- `client_name` (string, required): The name of the client.
+- `amount` (float, required): The amount to be used in the calculation.
+
+#### Example
+```json
+{
+    "client_name": "client1",
+    "amount": 1000
+}
+```
+
+#### Responses
+- `200 OK`: Calculation successful.
+  ```json
+  {
+      "status": "success",
+      "payment": 100.0,
+      "formula": "amount * 0.1"
+  }
+  ```
+- `400 Bad Request`: Missing parameters.
+  ```json
+  {
+      "status": "error",
+      "message": "Client name and amount are required."
+  }
+  ```
+- `404 Not Found`: Client not found.
+- `500 Internal Server Error`: Server error.
+
+### 5. Get All Clients
+**GET** `/get_all_clients`
+
+Retrieves a list of all clients.
+
+#### Responses
+- `200 OK`: List of clients retrieved successfully.
+  ```json
+  {
+      "status": "success",
+      "clients": [
+          [1, "client1", "amount * 0.1"],
+          [2, "client2", "amount * 0.2"]
+      ]
+  }
+  ```
+- `500 Internal Server Error`: Server error.
+
+## Error Handling
+All error responses include a `status` field indicating "error" and a `message` field providing more details about the error.
+
+## Notes
+- Ensure the API server is running before making any requests.
+- Use appropriate headers (`Content-Type: application/json`) for requests with a body.
+- Handle possible server errors and invalid inputs gracefully in your client application.
+
