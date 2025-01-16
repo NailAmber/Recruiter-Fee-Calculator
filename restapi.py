@@ -103,9 +103,9 @@ def api_remove_admin(id):
 def api_get_all_admins():
     try:
         admins = get_all_admins()
-        return make_response(jsonify({"status": "success", "clients": admins}), 200)
+        return make_response(jsonify({"status": "success", "admins": admins}), 200)
     except Exception as e:
-        logging.error(f"Error retrieving all admins: {e}")
+        logging.error(f"Error retrieving all Admins: {e}")
         return make_response(jsonify({"status": "error", "message": "Internal server error."}), 500)
 
 
