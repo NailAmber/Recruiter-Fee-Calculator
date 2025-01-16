@@ -29,6 +29,11 @@ def create_table():
                     formula TEXT NOT NULL
                 );
             ''')
+            cur.execute('''
+            CREATE TABLE IF NOT EXISTS admins (
+                    id INTEGER UNIQUE NOT NULL      
+                );
+            ''')
             conn.commit()
     except sqlite3.DatabaseError as e:
         logging.error(f"Error creating table: {e}")
@@ -47,6 +52,46 @@ def add_client(name, formula):
     except sqlite3.DatabaseError as e:
         logging.error(f"Error adding client '{name}': {e}")
         raise Exception("Error adding client to the database.")
+    
+# Добавление администратора
+def add_admin(id):
+    # Проверка, что id является целым числом
+    if not isinstance(id, int):
+        raise ValueError("The provided id must be an integer.")
+    
+    try:
+        with connect_db() as conn:
+            cur = conn.cursor()
+            cur.execute('INSERT INTO admins (id) VALUES (?)', (id,))
+            conn.commit()
+    except sqlite3.IntegrityError as e:
+        logging.error(f"Admin '{id}' already exists: {e}")
+        raise
+    except sqlite3.DatabaseError as e:
+        logging.error(f"Error adding admin with id '{id}': {e}")
+        raise Exception("Error adding admin to the database.")
+    
+# Удаление администратора 
+def remove_admin(id) -> bool:
+    # Проверка, что id является целым числом
+    if not isinstance(id, int):
+        raise ValueError("The provided id must be an integer.")
+    
+    try:
+        with connect_db() as conn:
+            cur = conn.cursor()
+            cur.execute('SELECT 1 FROM admins WHERE id = ?', (id,))
+            admin_exists = cur.fetchone()
+
+            if admin_exists:
+                cur.execute('DELETE FROM admins WHERE id = ?', (id,))
+                conn.commit()
+                return True
+            else:
+                return False
+    except sqlite3.DatabaseError as e:
+        logging.error(f"Error removing admin with id '{id}': {e}")
+        raise
 
 # Удаление клиента
 def delete_client(name: str) -> bool:

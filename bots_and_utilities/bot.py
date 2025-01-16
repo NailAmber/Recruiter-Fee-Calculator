@@ -16,6 +16,19 @@ def delete_client():
     print(f"Status Code: {response.status_code}")
     print(response.json())
 
+def add_admin():
+    id = input("Enter admin id: ")
+    data = {"id": id}
+    response = requests.post(f"{BASE_URL}/add_admin", json=data)
+    print(f"Status Code: {response.status_code}")
+    print(response.json())
+
+def remove_admin():
+    id = input("Enter admin id to remove: ")
+    response = requests.delete(f"{BASE_URL}/remove_admin/{id}")
+    print(f"Status Code: {response.status_code}")
+    print(response.json())
+
 def update_client_formula():
     name = input("Enter client name: ")
     new_formula = input("Enter new formula: ")
@@ -45,7 +58,9 @@ def main():
         print("3. Update Client Formula")
         print("4. Calculate Payment")
         print("5. Get All Clients")
-        print("6. Exit")
+        print("6. Add admin")
+        print("7. Delete admin")
+        print("8. Exit")
         
         choice = input("Enter your choice: ")
         
@@ -60,6 +75,10 @@ def main():
         elif choice == '5':
             get_all_clients()
         elif choice == '6':
+            add_admin()
+        elif choice == '7':
+            remove_admin()
+        elif choice == '8':
             print("Exiting...")
             break
         else:

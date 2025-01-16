@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify, make_response
 import sqlite3
 import logging
-from db_functions import create_table, add_client, delete_client, update_client_formula, calculate_payment, get_all_clients
+from db_functions import create_table, add_client, delete_client, update_client_formula, calculate_payment, get_all_clients, add_admin, remove_admin
 
 app = Flask(__name__)
 
@@ -45,6 +45,57 @@ def api_delete_client(name):
             return make_response(jsonify({"status": "error", "message": f"Client '{name}' not found."}), 404)
     except Exception as e:
         logging.error(f"Error deleting client '{name}': {e}")
+        return make_response(jsonify({"status": "error", "message": "Internal server error."}), 500)
+
+
+@app.route('/add_admin', methods=['POST'])
+def api_add_admin():
+    data = request.json
+    id = data.get('id')
+
+    # Проверка на отсутствие обязательных параметров
+    if not id:
+        return make_response(jsonify({"status": "error", "message": "Id is required."}), 400)
+    
+    try:
+        # Попытка преобразовать строку в целое число
+        int_id = int(id)
+    except ValueError:
+        return make_response(jsonify({"status": "error", "message": "Admin id is required as number."}), 400)
+
+    try:
+        # Попытка добавления админа
+        add_admin(int_id)
+        return make_response(jsonify({"status": "success", "message": f"Admin '{int_id}' added."}), 201)
+    
+    except sqlite3.IntegrityError:
+        # Ошибка при добавлении админа, если имя уже существует
+        return make_response(jsonify({"status": "error", "message": f"Admin '{int_id}' already exists."}), 409)
+    
+    except Exception as e:
+        # Логируем ошибку и возвращаем внутреннюю ошибку сервера
+        logging.error(f"Error adding admin: {e}")
+        return make_response(jsonify({"status": "error", "message": "Internal server error."}), 500)
+
+
+@app.route('/remove_admin/<id>', methods=['DELETE'])
+def api_remove_admin(id):
+    if not id:
+        return make_response(jsonify({"status": "error", "message": "Admin id is required."}), 400)
+    
+    try:
+        # Попытка преобразовать строку в целое число
+        int_id = int(id)
+    except ValueError:
+        return make_response(jsonify({"status": "error", "message": "Admin id is required as number."}), 400)
+    
+    try:
+        if remove_admin(int_id):
+            return make_response(jsonify({"status": "success", "message": f"Admin '{int_id}' removed."}), 200)
+        else:
+            return make_response(jsonify({"status": "error", "message": f"Admin '{int_id}' not found."}), 404)
+    except Exception as e:
+        logging.error(f"Error removing admin '{int_id}': {e}")
         return make_response(jsonify({"status": "error", "message": "Internal server error."}), 500)
 
 
