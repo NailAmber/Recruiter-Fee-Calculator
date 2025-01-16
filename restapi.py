@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify, make_response
 import sqlite3
 import logging
-from db_functions import create_table, add_client, delete_client, update_client_formula, calculate_payment, get_all_clients, add_admin, remove_admin
+from db_functions import create_table, add_client, delete_client, update_client_formula, calculate_payment, get_all_clients, add_admin, remove_admin, get_all_admins
 
 app = Flask(__name__)
 
@@ -96,6 +96,16 @@ def api_remove_admin(id):
             return make_response(jsonify({"status": "error", "message": f"Admin '{int_id}' not found."}), 404)
     except Exception as e:
         logging.error(f"Error removing admin '{int_id}': {e}")
+        return make_response(jsonify({"status": "error", "message": "Internal server error."}), 500)
+
+
+@app.route('/get_all_admins', methods=['GET'])
+def api_get_all_admins():
+    try:
+        admins = get_all_admins()
+        return make_response(jsonify({"status": "success", "clients": admins}), 200)
+    except Exception as e:
+        logging.error(f"Error retrieving all admins: {e}")
         return make_response(jsonify({"status": "error", "message": "Internal server error."}), 500)
 
 

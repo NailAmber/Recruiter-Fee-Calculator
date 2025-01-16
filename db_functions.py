@@ -93,6 +93,18 @@ def remove_admin(id) -> bool:
         logging.error(f"Error removing admin with id '{id}': {e}")
         raise
 
+# Получение всех администраторов
+def get_all_admins():
+    try:
+        with connect_db() as conn:
+            cur = conn.cursor()
+            cur.execute("SELECT * FROM admins")
+            admins = cur.fetchall()
+            return admins
+    except sqlite3.DatabaseError as e:
+        logging.error(f"Error fetching admins: {e}")
+        raise
+
 # Удаление клиента
 def delete_client(name: str) -> bool:
     try:

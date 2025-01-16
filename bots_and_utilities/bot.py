@@ -29,6 +29,11 @@ def remove_admin():
     print(f"Status Code: {response.status_code}")
     print(response.json())
 
+def get_all_admins():
+    response = requests.get(f"{BASE_URL}/get_all_admins")
+    print(f"Status Code: {response.status_code}")
+    print(response.json())
+
 def update_client_formula():
     name = input("Enter client name: ")
     new_formula = input("Enter new formula: ")
@@ -60,7 +65,8 @@ def main():
         print("5. Get All Clients")
         print("6. Add admin")
         print("7. Delete admin")
-        print("8. Exit")
+        print("8. Get All Clients")
+        print("9. Exit")
         
         choice = input("Enter your choice: ")
         
@@ -79,6 +85,8 @@ def main():
         elif choice == '7':
             remove_admin()
         elif choice == '8':
+            get_all_admins()
+        elif choice == '9':
             print("Exiting...")
             break
         else:
