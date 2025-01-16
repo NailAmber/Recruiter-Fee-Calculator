@@ -23,7 +23,7 @@ Adds a new client with a specified formula for payment calculation.
 ```json
 {
     "name": "client1",
-    "formula": "amount * 0.1"
+    "formula": "payment * 0.1"
 }
 ```
 
@@ -89,7 +89,7 @@ Updates the formula for an existing client.
 ```json
 {
     "name": "client1",
-    "new_formula": "amount * 0.2"
+    "new_formula": "payment * 0.2"
 }
 ```
 
@@ -124,7 +124,7 @@ Calculates the payment for a specified client based on their formula.
 
 #### Request Body
 - `client_name` (string, required): The name of the client.
-- `amount` (float, required): The amount to be used in the calculation.
+- `payment` (float, required): The amount to be used in the calculation.
 
 #### Example
 ```json
@@ -140,7 +140,7 @@ Calculates the payment for a specified client based on their formula.
   {
       "status": "success",
       "payment": 100.0,
-      "formula": "amount * 0.1"
+      "formula": "payment * 0.1"
   }
   ```
 - `400 Bad Request`: Missing parameters.
@@ -164,8 +164,8 @@ Retrieves a list of all clients.
   {
       "status": "success",
       "clients": [
-          [1, "client1", "amount * 0.1"],
-          [2, "client2", "amount * 0.2"]
+          [1, "client1", "payment * 0.1"],
+          [2, "client2", "payment * 0.2"]
       ]
   }
   ```
