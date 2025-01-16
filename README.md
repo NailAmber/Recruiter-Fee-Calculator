@@ -242,6 +242,24 @@ Removes an existing Admin by id.
   ```
 - `500 Internal Server Error`: Server error.
 
+### 8. Get All Admins
+**GET** `/get_all_admins`
+
+Retrieves a list of all Admins.
+
+#### Responses
+- `200 OK`: List of Admins retrieved successfully.
+  ```json
+  {
+      "status": "success",
+      "admins": [
+          [123123123],
+          [213213232]
+      ]
+  }
+  ```
+- `500 Internal Server Error`: Server error.
+
 ## Error Handling
 All error responses include a `status` field indicating "error" and a `message` field providing more details about the error.
 
