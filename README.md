@@ -171,6 +171,77 @@ Retrieves a list of all clients.
   ```
 - `500 Internal Server Error`: Server error.
 
+### 6. Add Admin
+**POST** `/add_admin`
+
+Adds a new Admin.
+
+#### Request Body
+- `id` (string\int, required): telegram id of the new Admin.
+
+#### Example
+```json
+{
+    "id": "123123123"
+}
+```
+
+#### Responses
+- `201 Created`: Admin added successfully.
+  ```json
+  {
+      "status": "success",
+      "message": "Admin '123213213' added."
+  }
+  ```
+- `400 Bad Request`: Missing required parameters or id is not a number.
+  ```json
+  {
+      "status": "error",
+      "message": "Admin id is required as number."
+  }
+  ```
+- `409 Conflict`: Admin already exists.
+  ```json
+  {
+      "status": "error",
+      "message": "Admin '123213213' already exists."
+  }
+  ```
+- `500 Internal Server Error`: Server error.
+
+### 7. Remove Admin
+**DELETE** `/remove_client/<id>`
+
+Removes an existing Admin by id.
+
+#### URL Parameter
+- `id` (string\int, required): The telegram id of the Admin to be deleted.
+
+#### Responses
+- `200 OK`: Admin removed successfully.
+  ```json
+  {
+      "status": "success",
+      "message": "Admin '123213123' deleted."
+  }
+  ```
+- `400 Bad Request`: Missing required parameters or id is not a number.
+  ```json
+  {
+      "status": "error",
+      "message": "Admin id is required as number."
+  }
+  ```
+- `404 Not Found`: Admin not found.
+  ```json
+  {
+      "status": "error",
+      "message": "Admin '123213213' not found."
+  }
+  ```
+- `500 Internal Server Error`: Server error.
+
 ## Error Handling
 All error responses include a `status` field indicating "error" and a `message` field providing more details about the error.
 
