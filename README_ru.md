@@ -211,7 +211,7 @@ http://<ip-адрес-сервера>:5000/
 - `500 Internal Server Error`: Ошибка на сервере.
 
 ### 7. Удалить администратора
-**DELETE** `/remove_client/<id>`
+**DELETE** `/remove_admin/<id>`
 
 Удаляет существующего администратора по id.
 
