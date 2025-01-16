@@ -211,7 +211,7 @@ Adds a new Admin.
 - `500 Internal Server Error`: Server error.
 
 ### 7. Remove Admin
-**DELETE** `/remove_client/<id>`
+**DELETE** `/remove_admin/<id>`
 
 Removes an existing Admin by id.
 
