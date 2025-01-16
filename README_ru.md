@@ -140,7 +140,7 @@ http://<ip-адрес-сервера>:5000/
   {
       "status": "success",
       "payment": 100.0,
-      "formula": "amount * 0.1"
+      "formula": "payment * 0.1"
   }
   ```
 - `400 Bad Request`: Отсутствуют параметры.
