@@ -130,7 +130,7 @@ Calculates the payment for a specified client based on their formula.
 ```json
 {
     "client_name": "client1",
-    "amount": 1000
+    "payment": 1000
 }
 ```
 
