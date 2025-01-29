@@ -63,9 +63,9 @@ def main():
         print("3. Update Client Formula")
         print("4. Calculate Payment")
         print("5. Get All Clients")
-        print("6. Add admin")
-        print("7. Delete admin")
-        print("8. Get All Clients")
+        print("6. Add Admin")
+        print("7. Delete Admin")
+        print("8. Get All Admins")
         print("9. Exit")
         
         choice = input("Enter your choice: ")
