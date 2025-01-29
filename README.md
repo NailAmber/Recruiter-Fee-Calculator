@@ -211,7 +211,7 @@ Removes an existing admin.
 - `400 Bad Request`
 - `404 Not Found`
 
-### ⚠️ Error Handling
+## ⚠️ Error Handling
 All errors follow this format:
 ```json
 {
@@ -220,13 +220,13 @@ All errors follow this format:
 }
 ```
 
-### 🚦 Quick Start
+## 🚦 Quick Start
 ```
 pip install flask
 python restapi.py
 ```
 
-### 📌 Notes
+## 📌 Notes
 - 🔒 Always use HTTPS in production
 - 📁 Database file is automatically created
 - 📋 Request/Response examples use JSON format
