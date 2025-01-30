@@ -14,7 +14,6 @@ A Go-based Telegram bot that verifies user admin status by checking against a RE
 ## ✨ Features
 - Real-time admin status verification
 - Error handling for API communication failures
-- Environment variable configuration
 - Support for nested API responses
 - Immediate user feedback with status messages
 
@@ -74,6 +73,6 @@ Example valid response:
 
 | Error Message                  | Solution                          |
 | :---------------------------- | :-------------------------------- |
-| Invalid token                  | Verify BOT_TOKEN in .env          |
+| Invalid token                  | Verify BOT_TOKEN          |
 | API connection failed          | Check API server availability     |
 | Unexpected response format     | Validate API JSON structure       |
