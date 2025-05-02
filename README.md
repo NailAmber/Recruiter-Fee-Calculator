@@ -211,23 +211,29 @@ Removes an existing admin.
 - `400 Bad Request`
 - `404 Not Found`
 
-#### 8. 📜 List All Admins
-**`GET`** `/get_all_admins`
+#### 8. 📜 List All Admins  
+**`GET`** `/get_all_admins`  
 
-Retrieves a list of all Admins.
+Retrieves a list of all Admins.  
 
-**Responses:**
-- `200 OK`
+**Responses:**  
+- `200 OK`  
   ```json
   {
     "status": "success",
     "admins": [
-        {"id": 1, "name": "admin1"},
-        {"id": 2, "name": "admin2"}
+        [123456789],
+        [987654321]
     ]
   }
   ```
-- `500 Internal Server Error`
+- `500 Internal Server Error`  
+  ```json
+  {
+    "status": "error",
+    "message": "Internal server error."
+  }
+  ```
 
 ## ⚠️ Error Handling
 All errors follow this format:
