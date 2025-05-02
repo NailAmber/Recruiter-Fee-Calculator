@@ -222,12 +222,18 @@ http://<your-server-ip>:5000/
   {
     "status": "success",
     "admins": [
-        {"id": 1, "name": "admin1"},
-        {"id": 2, "name": "admin2"}
+        [123456789],
+        [987654321]
     ]
   }
   ```
-- `500 Internal Server Error`  
+- `500 Internal Server Error`
+  ```json
+  {
+  "status": "error",
+  "message": "Internal server error."
+  }
+  ```  
 
 ## ⚠️ Обработка ошибок
 Все ошибки следуют этому формату:
